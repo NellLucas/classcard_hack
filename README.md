@@ -47,4 +47,4 @@ pip install -r requirements.txt
 
 ## License / 라이센스
 
-**MIT License**가 적용되어 있습니다.
+**Apache 2.0 License**가 적용되어 있습니다.
