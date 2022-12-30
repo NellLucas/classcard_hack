@@ -2,7 +2,7 @@
 ![last commit](https://img.shields.io/github/last-commit/IrisEsther/classcard_hack/main?color=red) ![license](https://img.shields.io/github/license/IrisEsther/classcard_hack) ![dependencies](https://img.shields.io/badge/selenium-%3E%3D%204.7.2-blue)
 > ✨ Selenium 을 활용한 Classcard 자동화 프로그램입니다.
 ## 시연영상
-https://user-images.githubusercontent.com/114709497/210045846-2500dea0-4a0e-4005-9c43-bd26847fb4f6.mp4
+https://user-images.githubusercontent.com/114709497/210046306-8f532d47-3226-4731-841a-382440e74290.mp4
 
 ## Features / 지원하는 기능들
 - 암기학습
