@@ -261,16 +261,15 @@ while True:
                             ).click()
         time.sleep(1)
 
-        # 매칭 게임 시작
         time.sleep(2.5)
         past_cards = ""
         while True:
             try:
                 html = BeautifulSoup(driver.page_source, "html.parser")
-                # 점수 순으로 정렬
+
                 unsorted_cards = dict()
                 cards = html.find("div", class_="match-body").get_text(strip=True)
-                # 이전 카드와 같으면 다시
+
                 if past_cards == cards:
                     raise NotImplementedError
                 for i in range(4):
@@ -281,7 +280,7 @@ while True:
                     left_card.find("span", class_="card-score").decompose()
                     question = left_card.get_text(strip=True)
                     unsorted_cards["{}_{}".format(question, str(i))] = score
-                    # 점수 높은 순서로 배열
+
                     sorted_lists = {
                         k: v
                         for k, v in sorted(
@@ -291,7 +290,6 @@ while True:
                 for k in sorted_lists:
                     word = k.split("_")[0]
                     order = k.split("_")[1]
-                    # answer = list[word]
                     answer = da_k[da_e.index(word)]
 
                     for j in range(4):
@@ -348,6 +346,7 @@ while True:
             pass
 
         element = WebDriverWait(driver, 100000).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[1]/div/div/div/div/div[1]")))
+        beforeCash_d = '$%(@!_'
 
         while True:
             bfb = str(driver.find_element(By.XPATH, "/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[2]").get_attribute('class'))
@@ -357,7 +356,52 @@ while True:
                 if bfb == 'battle-result battle-feedback hidden':
                     time.sleep(0.2)
                     try:
-                        time.sleep(0.2)
+                        cash_d = driver.find_element(By.XPATH,
+                                                     f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[1]/div/div/div/div/div[1]"
+                                                     ).text
+                        if cash_d == '':
+                            raise NoSuchElementException
+                        if cash_d == beforeCash_d:
+                            raise ValueError
+
+                        cash_dby = [0, 0, 0, 0]
+
+                        for j in range(0, 4):
+                            cash_dby[j] = driver.find_element(By.XPATH,
+                                                              f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[2]/div/div/div[2]/div[{j + 1}]/div/div"
+                                                              ).text
+                        time.sleep(0.1)
+                        notFindData = False
+
+                        if cash_d.upper() != cash_d.lower():
+                            for j in range(0, 4):
+                                if da_e.index(cash_d) == da_k.index(cash_dby[j]):
+                                    element = driver.find_element(By.XPATH,
+                                                                  f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[2]/div/div/div[2]/div[{j + 1}]/div/div"
+                                                                  )
+                                    driver.execute_script("arguments[0].click();", element)
+                                    notFindData = True
+                                    break
+                        else:
+                            for j in range(0, 4):
+                                if da_k.index(cash_d) == da_e.index(cash_dby[j]):
+                                    element = driver.find_element(By.XPATH,
+                                                                  f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[2]/div/div/div[2]/div[{j + 1}]/div/div"
+                                                                  )
+                                    driver.execute_script("arguments[0].click();", element)
+                                    notFindData = True
+                                    break
+
+                        if notFindData != True:
+                            print("\nDetected Missing Words!!, Randomly Selected\n")
+                            driver.find_element(By.XPATH,
+                                                f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[2]/div/div/div[2]/div[{random.randint(1, 4)}]/div/div"
+                                                ).click()
+                            time.sleep(0.2)
+                        beforeCash_d = cash_d
+                        time.sleep(0.3)
+                    except NoSuchElementException:
+                        time.sleep(0.5)
                         cash_sd = str(driver.find_element(By.XPATH, "/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[1]/div/div/div/div/div[1]/a").get_attribute('data-src'))
 
                         cash_sdy = [0, 0, 0, 0]
@@ -395,51 +439,6 @@ while True:
                                                 ).click()
                             time.sleep(0.2)
                         time.sleep(0.4)
-
-                    except NoSuchElementException:
-                        cash_d = '$%(@!_'
-                        while cash_d != driver.find_element(By.XPATH,
-                                                            f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[1]/div/div/div/div/div[1]").text:
-                            time.sleep(0.01)
-                            cash_d = driver.find_element(By.XPATH,
-                                                         f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[1]/div/div/div/div/div[1]"
-                                                         ).text
-                        if cash_d == '':
-                            pass
-
-                        cash_dby = [0, 0, 0, 0]
-
-                        for j in range(0, 4):
-                            cash_dby[j] = driver.find_element(By.XPATH,
-                                                              f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[2]/div/div/div[2]/div[{j + 1}]/div/div"
-                                                              ).text
-                        time.sleep(0.1)
-                        notFindData = False
-
-                        if cash_d.upper() != cash_d.lower():
-                            for j in range(0, 4):
-                                if da_e.index(cash_d) == da_k.index(cash_dby[j]):
-                                    element = driver.find_element(By.XPATH,
-                                                                  f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[2]/div/div/div[2]/div[{j + 1}]/div/div"
-                                                                  )
-                                    driver.execute_script("arguments[0].click();", element)
-                                    notFindData = True
-                                    break
-                        else:
-                            for j in range(0, 4):
-                                if da_k.index(cash_d) == da_e.index(cash_dby[j]):
-                                    element = driver.find_element(By.XPATH,
-                                                                  f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[2]/div/div/div[2]/div[{j + 1}]/div/div"
-                                                                  )
-                                    driver.execute_script("arguments[0].click();", element)
-                                    notFindData = True
-                                    break
-
-                        if notFindData != True:
-                            print("\nDetected Missing Words!!, Randomly Selected\n")
-                            driver.find_element(By.XPATH,
-                                                f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[2]/div/div/div[2]/div[{random.randint(1, 4)}]/div/div"
-                                                ).click()
-                            time.sleep(0.2)
-                        time.sleep(0.4)
+                    except ValueError:
+                        pass
                     time.sleep(0.2)
