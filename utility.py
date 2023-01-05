@@ -15,18 +15,15 @@ def word_get(driver, num_d):
             f"//*[@id='tab_set_all']/div[2]/div[{i}]/div[4]/div[1]/div[1]/div/div"
         ).text
     for i in range(1, num_d):
-        url = driver.find_element(By.XPATH, f"//*[@id='tab_set_all']/div[2]/div[{i}]/div[4]/div[1]/div[3]/a")
-        vl = url.get_attribute('data-src')
-        lv = vl.split("/")
-        lv = list(filter(None, lv))
+        url = driver.find_element(By.XPATH, f"//*[@id='tab_set_all']/div[2]/div[{i}]/div[4]/div[1]/div[3]/a").get_attribute('data-src')
+        lv = list(filter(None, url.split("/")))
         for k in range(0, len(lv)):
             if "uploads" in lv[k]:
                 for j in range(0, k):
                     del lv[0]
                 break
         lv.insert(0, '')
-        lv = "/".join(lv)
-        da_sd[i] = lv
+        da_sd[i] = "/".join(lv)
 
     driver.find_element(By.CSS_SELECTOR,
         "#tab_set_all > div.card-list-title > div > div:nth-child(1) > a"
