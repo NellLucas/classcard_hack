@@ -15,7 +15,7 @@ def word_get(driver, num_d):
             f"//*[@id='tab_set_all']/div[2]/div[{i}]/div[4]/div[1]/div[1]/div/div"
         ).text
     for i in range(1, num_d):
-        url = driver.find_element(By.XPATH, f"/html/body/div[1]/div[4]/div[4]/div[3]/div[1]/div[2]/div[{i}]/div[4]/div[1]/div[3]/a")
+        url = driver.find_element(By.XPATH, f"//*[@id='tab_set_all']/div[2]/div[{i}]/div[4]/div[1]/div[3]/a")
         vl = url.get_attribute('data-src')
         lv = vl.split("/")
         lv = list(filter(None, lv))
