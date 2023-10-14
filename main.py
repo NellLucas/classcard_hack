@@ -1,8 +1,6 @@
 import time
 import warnings
 import random
-import os
-import chromedriver_autoinstaller
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -23,18 +21,9 @@ time_2 = round(random.uniform(1.7, 2.3), 4)
 time_1_5 = round(random.uniform(1.2, 1.8), 4)
 
 
-chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]
-driver_path = f'./{chrome_ver}/chromedriver.exe'
-if os.path.exists(driver_path):
-    print(f"성공적으로 크롬 드라이버를 불러왔습니다!: {driver_path}")
-else:
-    print(f"크롬드라이버를 설치중입니다!(Ver: {chrome_ver})")
-    chromedriver_autoinstaller.install(True)
-
-
 options = webdriver.ChromeOptions()
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
-driver = webdriver.Chrome(driver_path, options=options)
+driver = webdriver.Chrome(options=options)
 
 
 driver.get("https://www.classcard.net/Login")
