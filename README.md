@@ -1,5 +1,5 @@
 # Classcard-Hack
-![last commit](https://img.shields.io/github/last-commit/NellLucas/classcard_hack/main?color=red) ![license](https://img.shields.io/github/license/NellLucas/classcard_hack) ![dependencies](https://img.shields.io/badge/selenium-%3E%3D%204.7.2-blue)
+![last commit](https://img.shields.io/github/last-commit/NellLucas/classcard_hack/main?color=red) ![license](https://img.shields.io/github/license/NellLucas/classcard_hack) ![dependencies](https://img.shields.io/badge/selenium-%3E%3D%204.11.0-blue)
 > ✨ Selenium 을 활용한 Classcard 자동화 프로그램입니다.
 ## 시연영상
 https://user-images.githubusercontent.com/114709497/210046306-8f532d47-3226-4731-841a-382440e74290.mp4
