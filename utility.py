@@ -1,3 +1,4 @@
+import time
 import json
 import re
 from selenium.webdriver.common.by import By
@@ -28,7 +29,8 @@ def word_get(driver, num_d):
     driver.find_element(By.CSS_SELECTOR,
         "#tab_set_all > div.card-list-title > div > div:nth-child(1) > a"
     ).click()
-
+    time.sleep(0.5)
+    
     for i in range(1, num_d):
         ko_d = driver.find_element(By.XPATH,
             f"//*[@id='tab_set_all']/div[2]/div[{i}]/div[4]/div[2]/div[1]/div/div"
