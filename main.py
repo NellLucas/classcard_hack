@@ -208,12 +208,13 @@ while True:
             driver.execute_script("arguments[0].click();", element)
 
             cash_dby = [0, 0, 0, 0, 0, 0]
-
+            time.sleep(time_1)
+          
             for j in range(0, 6):
                 cash_dby[j] = driver.find_element(By.XPATH,
                                                   f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
                                                   ).text
-            time.sleep(time_1)
+
             notFindData = False
             if cash_d.upper() != cash_d.lower():
                 for j in range(0, 6):
