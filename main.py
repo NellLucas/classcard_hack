@@ -23,6 +23,7 @@ time_1_5 = round(random.uniform(1.2, 1.8), 4)
 
 options = webdriver.ChromeOptions()
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
+options.add_argument('--disable-blink-features=AutomationControlled')
 driver = webdriver.Chrome(options=options)
 
 
@@ -47,10 +48,10 @@ except:
 time.sleep(1)
 
 driver.find_element(By.CSS_SELECTOR,
-                    "body > div.mw-1080 > div.p-b-sm > div.set-body.m-t-25.m-b-lg > div.m-b-md > div > a"
+                    "body > div.test > div.p-b-sm > div.set-body.m-t-25.m-b-lg > div.m-b-md > div > a"
                     ).click()
 driver.find_element(By.CSS_SELECTOR,
-                    "body > div.mw-1080 > div.p-b-sm > div.set-body.m-t-25.m-b-lg > div.m-b-md > div > ul > li:nth-child(1)"
+                    "body > div.test > div.p-b-sm > div.set-body.m-t-25.m-b-lg > div.m-b-md > div > ul > li:nth-child(1)"
                     ).click()
 
 html = BeautifulSoup(driver.page_source, "html.parser")
@@ -63,13 +64,15 @@ word_d = word_get(driver, num_d)
 
 da_e = word_d[0]
 da_k = word_d[1]
-da_kyn = word_d[2]
-da_sd = word_d[3]
+da_kn = word_d[2]
+da_kyn = word_d[3]
+da_sd = word_d[4]
+
 
 while True:
     if ch_d == 1:
-        driver.find_element(By.CSS_SELECTOR,
-                            "#tab_set_all > div.card-list-title > div > div.text-right > a:nth-child(1)"
+        driver.find_element(By.XPATH,
+                            "/html/body/div[2]/div/div[2]/div[1]/div[1]"
                             ).click()
         driver.find_element(By.CSS_SELECTOR,
                             "#wrapper-learn > div.start-opt-body > div > div > div > div.m-t > a"
@@ -91,8 +94,8 @@ while True:
                             "body > div.study-header-body > div > div:nth-child(1) > div:nth-child(1) > a"
                             ).click()
     elif ch_d == 2:
-        driver.find_element(By.CSS_SELECTOR,
-                            "#tab_set_all > div.card-list-title > div > div.text-right > a:nth-child(2)"
+        driver.find_element(By.XPATH,
+                            "/html/body/div[2]/div/div[2]/div[1]/div[2]"
                             ).click()
         driver.find_element(By.CSS_SELECTOR,
                             "#wrapper-learn > div.start-opt-body > div > div > div > div.m-t > a"
@@ -146,8 +149,8 @@ while True:
                                     ).click()
                 break
     elif ch_d == 3:
-        driver.find_element(By.CSS_SELECTOR,
-                            "body > div.bottom-fixed > div > div.cc-table.fill-parent.m-t > div.font-0 > div:nth-child(3)"
+        driver.find_element(By.XPATH,
+                            "/html/body/div[2]/div/div[2]/div[1]/div[3]"
                             ).click()
         driver.find_element(By.CSS_SELECTOR,
                             "#wrapper-learn > div.start-opt-body > div > div > div > div.m-t > a"
@@ -195,9 +198,19 @@ while True:
         driver.find_element(By.XPATH,
                             "//*[@id='wrapper-test']/div/div[1]/div[3]/div[3]/a"
                             ).click()
-        time.sleep(time_1)
+        # 이미 학습 기록이 존재한다는 알림창이 나타날 시 아래 코드 사용
+        '''
+        for _ in range(2):
+            time.sleep(1)
+            driver.find_element(By.XPATH,
+                                "//*[@id='confirmModal']/div[2]/div/div[2]/a[3]"
+                                ).click()
+        '''
+        #print(da_k)
+        #print(da_e)
 
         for i in range(1, num_d):
+            time.sleep(0.5)
             cash_d = driver.find_element(By.XPATH,
                                          f"//*[@id='testForm']/div[{i}]/div/div[1]/div[2]/div/div/div"
                                          ).text
@@ -206,45 +219,63 @@ while True:
                                           f"//*[@id='testForm']/div[{i}]/div/div[1]/div[2]"
                                           )
             driver.execute_script("arguments[0].click();", element)
+            time.sleep(0.5)
 
             cash_dby = [0, 0, 0, 0, 0, 0]
-            time.sleep(time_1)
-          
             for j in range(0, 6):
                 cash_dby[j] = driver.find_element(By.XPATH,
                                                   f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
                                                   ).text
+            #print(cash_dby)
 
             notFindData = False
             if cash_d.upper() != cash_d.lower():
                 for j in range(0, 6):
-                    if da_e.index(cash_d) == da_k.index(cash_dby[j]):
-                        element = driver.find_element(By.XPATH,
-                                                      f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
-                                                      )
-                        driver.execute_script("arguments[0].click();", element)
-                        notFindData = True
-                        break
+                    try:
+                        if da_e.index(cash_d) == da_k.index(cash_dby[j]):
+                            element = driver.find_element(By.XPATH,
+                                                        f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
+                                                        )
+                            driver.execute_script("arguments[0].click();", element)
+                            notFindData = True
+                            break
+                    except:
+                        if da_e.index(cash_d) == da_kn.index(cash_dby[j]):
+                            element = driver.find_element(By.XPATH,
+                                                        f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
+                                                        )
+                            driver.execute_script("arguments[0].click();", element)
+                            notFindData = True
+                            break
             else:
                 for j in range(0, 6):
-                    if da_k.index(cash_d) == da_e.index(cash_dby[j]):
-                        element = driver.find_element(By.XPATH,
-                                                      f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
-                                                      )
-                        driver.execute_script("arguments[0].click();", element)
-                        notFindData = True
-                        break
+                    try:
+                        if da_k.index(cash_d) == da_e.index(cash_dby[j]):
+                            element = driver.find_element(By.XPATH,
+                                                        f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
+                                                        )
+                            driver.execute_script("arguments[0].click();", element)
+                            notFindData = True
+                            break
+                    except:
+                        if da_kn.index(cash_d) == da_e.index(cash_dby[j]):
+                            element = driver.find_element(By.XPATH,
+                                                        f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
+                                                        )
+                            driver.execute_script("arguments[0].click();", element)
+                            notFindData = True
+                            break
             if notFindData != True:
                 print("\nDetected Missing Words!!, Randomly Selected\n")
                 driver.find_element(By.XPATH,
                                     f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{random.randint(1, 6)}]/label/div/div"
                                     ).click()
                 time.sleep(time_1)
-            time.sleep(time_2)
+            time.sleep(1.2)
     elif ch_d == 5:
         print("Ctrl + C 를 눌러 강제 종료")
-        driver.find_element(By.CSS_SELECTOR,
-                            "body > div.bottom-fixed > div > div.cc-table.fill-parent.m-t > div.font-0 > div:nth-child(5)"
+        driver.find_element(By.XPATH,
+                            "/html/body/div[2]/div/div[2]/div[1]/div[5]"
                             ).click()
         driver.find_element(By.CSS_SELECTOR,
                             "#wrapper-learn > div.vertical-mid.center.fill-parent > div.start-opt-body > div > div > div.start-opt-box > div:nth-child(4) > a"

@@ -8,6 +8,7 @@ import requests
 def word_get(driver, num_d):
     da_e = [0 for _ in range(num_d)]
     da_k = [0 for _ in range(num_d)]
+    da_kn = [0 for _ in range(num_d)]
     da_kyn = [0 for _ in range(num_d)]
     da_sd = [0 for _ in range(num_d)]
 
@@ -43,12 +44,13 @@ def word_get(driver, num_d):
                 da_kyn[i] = f"{ko_d[0]}"
             else:
                 da_k[i] = f"{ko_d[0]}\n{ko_d[1]}"
+                da_kn[i] = f"{ko_d[0]}, {ko_d[1]}"
                 da_kyn[i] = f"{ko_d[0]} {ko_d[1]}"
         except:
             da_k[i] = f"{ko_d[0]}"
             da_kyn[i] = f"{ko_d[0]}"
 
-    return [da_e, da_k, da_kyn, da_sd]
+    return [da_e, da_k, da_kn, da_kyn, da_sd]
 
 
 def chd_wh():
