@@ -1,16 +1,16 @@
 # Classcard-Hack
 ![last commit](https://img.shields.io/github/last-commit/NellLucas/classcard_hack/main?color=red) ![license](https://img.shields.io/github/license/NellLucas/classcard_hack) ![dependencies](https://img.shields.io/badge/selenium-%3E%3D%204.11.0-blue)
-> ✨ Selenium 을 활용한 Classcard 자동화 프로그램입니다.
+> ✨ Selenium 을 활용한 Classcard 학습 자동화 프로그램입니다.
 ## 시연영상
 https://user-images.githubusercontent.com/114709497/210046306-8f532d47-3226-4731-841a-382440e74290.mp4
 
 ## Features / 지원하는 기능들
-- 암기학습
-- 리콜학습
-- 스펠학습
-- 테스트학습
-- 매칭게임
-- QuizBattle(Classcard Battle)
+- 암기학습(API 변조, 매크로)
+- 리콜학습(API 변조, 매크로)
+- 스펠학습(API 변조, 매크로)
+- 매칭게임(API 변조, 매크로)
+- 테스트학습(매크로)
+- QuizBattle(매크로)
 
 
 ## Getting Started / 어떻게 시작하나요?
@@ -34,7 +34,7 @@ pip install -r requirements.txt
 ### How to use? / 사용 방법
 
 ```
-학습하려는 세트의 URL 입력 후, 자동화하고자 하는 학습 유형을 선택하시면 됩니다.
+ID 및 PW 입력 후, 자동화하고자 하는 학습 유형을 선택하시면 됩니다.
 ```
 
 ## Issues / 이슈
