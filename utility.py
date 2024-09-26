@@ -4,22 +4,27 @@ import json
 import re
 import os
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 import requests
 
 def word_get(driver, num_d) -> list:
-    da_e, da_k, da_kn, da_kyn, da_ked, da_sd = [[0] * num_d for _ in range(6)]
+    da_e, da_k, da_kn, da_kyn, da_ked, da_sd = [[""] * num_d for _ in range(6)]
 
     for i in range(1, num_d):
         da_e[i] = driver.find_element(By.XPATH,
             f"//*[@id='tab_set_all']/div[2]/div[{i}]/div[4]/div[1]/div[1]/div/div"
         ).text
-    for i in range(1, num_d):
-        url = driver.find_element(By.XPATH, f"//*[@id='tab_set_all']/div[2]/div[{i}]/div[4]/div[1]/div[3]/a").get_attribute('data-src')
-        lv = [part for part in url.split("/") if part]
-        upload_index = next((index for index, part in enumerate(lv) if "uploads" in part), None)
-        if upload_index is not None:
-            lv = lv[upload_index:]
-        da_sd[i] = "/" + "/".join(lv)
+    
+    try:
+        for i in range(1, num_d):
+            url = driver.find_element(By.XPATH, f"//*[@id='tab_set_all']/div[2]/div[{i}]/div[4]/div[1]/div[3]/a").get_attribute('data-src')
+            lv = [part for part in url.split("/") if part]
+            upload_index = next((index for index, part in enumerate(lv) if "uploads" in part), None)
+            if upload_index is not None:
+                lv = lv[upload_index:]
+            da_sd[i] = "/" + "/".join(lv)
+    except NoSuchElementException:
+        pass
 
     driver.find_element(By.CSS_SELECTOR,
         "#tab_set_all > div.card-list-title > div > div:nth-child(1) > a"
