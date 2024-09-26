@@ -1,6 +1,6 @@
 # Classcard-Hack
 ![dependencies](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white)![dependencies2](https://img.shields.io/badge/selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white) ![last commit](https://img.shields.io/github/last-commit/NellLucas/classcard_hack/main?color=red&style=for-the-badge) ![license](https://img.shields.io/github/license/NellLucas/classcard_hack?style=for-the-badge)
-> ✨ Selenium을 활용한 Classcard 학습 자동화 프로그램입니다.
+> ✨ Selenium을 활용한 Classcard 학습 자동화 핵입니다.
 ## 시연영상
 https://user-images.githubusercontent.com/114709497/210046306-8f532d47-3226-4731-841a-382440e74290.mp4
 
